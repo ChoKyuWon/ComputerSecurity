@@ -1,5 +1,4 @@
 import subprocess
-from pwn import *
 
 
 liblist = ["/lib/i386-linux-gnu/libxml2.so.2",
@@ -17,7 +16,7 @@ liblist = ["/lib/i386-linux-gnu/libxml2.so.2",
 re = "mov dword ptr \[esi\], edi"
 for lib in liblist:
     print(lib)
-    subprocess.run(["ROPgadget", "--re", re, "--binary", lib])
+    subprocess.run(["ROPgadget", "--re", re, "--binary", lib, "--offset", "0x0"])
 
 #ROPgadget --re "mov dword ptr \[esi\], edi" --binary
 
