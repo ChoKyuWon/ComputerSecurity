@@ -24,6 +24,6 @@ msg_addr = p.recvuntil(">>>").decode().split('@')[1][:14]
 print(del_addr, msg_addr)
 
 #gdb.attach(p)
-p.sendline("login")
+p.sendline("get-flag")
 print(p.recvuntil(">>>"))
 exit()
